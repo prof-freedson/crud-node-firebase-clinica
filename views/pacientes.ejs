@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Pacientes - Sistema de Pacientes</title>
+</head>
+<body>
+    <h1>Lista de Pacientes</h1>
+    
+    <div>
+        <a href="/">
+            <button>← Voltar ao Menu Principal</button>
+        </a>
+        <a href="/criar">
+            <button>➕ Adicionar Novo Paciente</button>
+        </a>
+    </div>
+    
+    <br>
+    
+    <% if (pacientes.length === 0) { %>
+        <div style="text-align: center; margin: 50px; padding: 20px; background-color: #f8f9fa; border: 1px solid #dee2e6;">
+            <h3>Nenhum paciente cadastrado</h3>
+            <p>Clique em "Adicionar Novo Paciente" para começar.</p>
+            <a href="/criar">
+                <button style="padding: 15px 30px; background-color: #28a745; color: white; border: none; border-radius: 5px;">
+                    ➕ Criar Primeiro Paciente
+                </button>
+            </a>
+        </div>
+    <% } else { %>
+        <div style="margin: 20px 0;">
+            <p><strong>Total de pacientes cadastrados: <%= pacientes.length %></strong></p>
+        </div>
+        
+        <table border="1" cellpadding="10" cellspacing="0" style="width: 100%; border-collapse: collapse;">
+            <thead style="background-color: #f8f9fa;">
+                <tr>
+                    <th>Nome</th>
+                    <th>Data de Nascimento</th>
+                    <th>Peso (kg)</th>
+                    <th>Altura (m)</th>
+                    <th>Tipo Sanguíneo</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% pacientes.forEach(function(paciente) { %>
+                    <tr>
+                        <td><%= paciente.nome_pac %></td>
+                        <td><%= paciente.data_nasc_pac %></td>
+                        <td><%= paciente.peso_pac %></td>
+                        <td><%= paciente.alt_pac %></td>
+                        <td><%= paciente.tipo_sang %></td>
+                        <td>
+                            <a href="/editar/<%= paciente.id %>">
+                                <button style="background-color: #ffc107; color: #212529; border: none; padding: 8px 15px; border-radius: 3px; margin: 2px;">
+                                    ✏️ Editar
+                                </button>
+                            </a>
+                            
+                            <form action="/deletar/<%= paciente.id %>" method="POST" style="display: inline;">
+                                <button 
+                                    type="submit" 
+                                    style="background-color: #dc3545; color: white; border: none; padding: 8px 15px; border-radius: 3px; margin: 2px;"
+                                    onclick="return confirm('Tem certeza que deseja excluir o paciente: <%= paciente.nome_pac %>?\\n\\nEsta ação não pode ser desfeita!');"
+                                >
+                                    🗑️ Excluir
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                <% }); %>
+            </tbody>
+        </table>
+    <% } %>
+    
+    <br>
+    
+    <div style="margin-top: 30px; padding: 20px; background-color: #e9ecef; border-radius: 5px;">
+        <h3>Ações Disponíveis:</h3>
+        <a href="/criar">
+            <button style="padding: 10px 20px; margin: 5px; background-color: #28a745; color: white; border: none; border-radius: 5px;">
+                ➕ Criar Novo Paciente
+            </button>
+        </a>
+        <a href="/">
+            <button style="padding: 10px 20px; margin: 5px; background-color: #6c757d; color: white; border: none; border-radius: 5px;">
+                🏠 Voltar ao Menu
+            </button>
+        </a>
+    </div>
+</body>
+</html> 

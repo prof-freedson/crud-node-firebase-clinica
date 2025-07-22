@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar Paciente - Sistema de Pacientes</title>
+</head>
+<body>
+    <h1>Editar Paciente</h1>
+    
+    <div>
+        <a href="/pacientes">
+            <button>← Voltar à Lista de Pacientes</button>
+        </a>
+        <a href="/">
+            <button>🏠 Menu Principal</button>
+        </a>
+    </div>
+    
+    <br>
+    
+    <form action="/editar/<%= paciente.id %>" method="POST">
+        <table>
+            <tr>
+                <td><label for="nome_pac">Nome do Paciente:</label></td>
+                <td>
+                    <input 
+                        type="text" 
+                        id="nome_pac" 
+                        name="nome_pac" 
+                        value="<%= paciente.nome_pac %>"
+                        required 
+                        maxlength="100"
+                        placeholder="Digite o nome completo"
+                    >
+                </td>
+            </tr>
+            
+            <tr>
+                <td><label for="data_nasc_pac">Data de Nascimento:</label></td>
+                <td>
+                    <input 
+                        type="date" 
+                        id="data_nasc_pac" 
+                        name="data_nasc_pac" 
+                        value="<%= paciente.data_nasc_pac %>"
+                        required
+                    >
+                </td>
+            </tr>
+            
+            <tr>
+                <td><label for="peso_pac">Peso (kg):</label></td>
+                <td>
+                    <input 
+                        type="number" 
+                        id="peso_pac" 
+                        name="peso_pac" 
+                        value="<%= paciente.peso_pac %>"
+                        step="0.01" 
+                        min="0" 
+                        max="999.99"
+                        placeholder="Ex: 70.5"
+                        required
+                    >
+                </td>
+            </tr>
+            
+            <tr>
+                <td><label for="alt_pac">Altura (m):</label></td>
+                <td>
+                    <input 
+                        type="number" 
+                        id="alt_pac" 
+                        name="alt_pac" 
+                        value="<%= paciente.alt_pac %>"
+                        step="0.01" 
+                        min="0" 
+                        max="99.99"
+                        placeholder="Ex: 1.75"
+                        required
+                    >
+                </td>
+            </tr>
+            
+            <tr>
+                <td><label for="tipo_sang">Tipo Sanguíneo:</label></td>
+                <td>
+                    <select id="tipo_sang" name="tipo_sang" required>
+                        <option value="">Selecione o tipo sanguíneo</option>
+                        <option value="A+" <%= paciente.tipo_sang === 'A+' ? 'selected' : '' %>>A+</option>
+                        <option value="A-" <%= paciente.tipo_sang === 'A-' ? 'selected' : '' %>>A-</option>
+                        <option value="B+" <%= paciente.tipo_sang === 'B+' ? 'selected' : '' %>>B+</option>
+                        <option value="B-" <%= paciente.tipo_sang === 'B-' ? 'selected' : '' %>>B-</option>
+                        <option value="AB+" <%= paciente.tipo_sang === 'AB+' ? 'selected' : '' %>>AB+</option>
+                        <option value="AB-" <%= paciente.tipo_sang === 'AB-' ? 'selected' : '' %>>AB-</option>
+                        <option value="O+" <%= paciente.tipo_sang === 'O+' ? 'selected' : '' %>>O+</option>
+                        <option value="O-" <%= paciente.tipo_sang === 'O-' ? 'selected' : '' %>>O-</option>
+                    </select>
+                </td>
+            </tr>
+            
+            <tr>
+                <td colspan="2">
+                    <br>
+                    <button type="submit" style="padding: 10px 20px;">Atualizar Paciente</button>
+                    <a href="/pacientes">
+                        <button type="button" style="padding: 10px 20px;">Cancelar</button>
+                    </a>
+                </td>
+            </tr>
+        </table>
+    </form>
+</body>
+</html> 

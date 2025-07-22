@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Pacientes - Clínica</title>
+    <!-- Referência ao manifest.json -->
+    <link rel="manifest" href="/manifest.json">
+    <!-- Cor da barra do navegador no mobile -->
+    <meta name="theme-color" content="#1976d2">
+</head>
+<body>
+    <h1>Sistema de Gerenciamento de Pacientes</h1>
+    
+    <div style="text-align: center; margin-top: 50px;">
+        <h2>Escolha uma opção:</h2>
+        
+        <div style="margin: 30px;">
+            <a href="/criar">
+                <button style="padding: 20px 40px; font-size: 18px; margin: 20px; background-color: #28a745; color: white; border: none; border-radius: 5px; cursor: pointer;">
+                    ➕ Criar Novo Paciente
+                </button>
+            </a>
+        </div>
+        
+        <div style="margin: 30px;">
+            <a href="/pacientes">
+                <button style="padding: 20px 40px; font-size: 18px; margin: 20px; background-color: #007bff; color: white; border: none; border-radius: 5px; cursor: pointer;">
+                    📋 Listar Todos os Pacientes
+                </button>
+            </a>
+        </div>
+    </div>
+    
+    <div style="text-align: center; margin-top: 100px; color: #666;">
+        <p>Sistema CRUD de Pacientes - Clínica</p>
+        <p>Desenvolvido com Node.js + Firebase + EJS</p>
+    </div>
+    <script>
+      // Verifica se o navegador suporta service workers
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('/service-worker.js')
+          .then(function(reg) {
+            console.log('Service Worker registrado!', reg);
+          })
+          .catch(function(err) {
+            console.log('Erro ao registrar o Service Worker:', err);
+          });
+      }
+    </script>
+</body>
+</html> 
