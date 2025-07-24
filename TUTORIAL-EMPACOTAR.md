@@ -1,6 +1,10 @@
 # Como Transformar o Sistema em Executável e Instalador (Windows)
 
-Este tutorial ensina como empacotar seu sistema Node.js + Firebase em um executável (.exe) usando Electron e criar um instalador (.exe) para Windows, facilitando a distribuição e instalação em outros computadores.
+> **ATENÇÃO:** O método recomendado e prioritário para usar o sistema é via deploy na Vercel (veja o tutorial principal). O empacotamento desktop (Electron) só deve ser utilizado em casos muito específicos, pois o sistema foi otimizado para rodar 100% na web.
+
+Este tutorial ensina como empacotar seu sistema Node.js + Firebase em um executável (.exe) usando Electron e criar um instalador (.exe) para Windows.
+
+**⚠️ IMPORTANTE:** O executável desktop agora apenas abre uma janela apontando para a versão web hospedada na Vercel (ex: `https://seu-projeto.vercel.app`). Não é mais necessário rodar servidor local ou manter arquivos sensíveis no computador do usuário.
 
 ---
 
@@ -15,7 +19,7 @@ npm install --save-dev electron electron-packager
 ```
 
 ### Passo 2: Criar o arquivo principal do Electron
-Crie um arquivo chamado `main.js` na raiz do projeto com o seguinte conteúdo básico:
+Crie um arquivo chamado `main.js` na raiz do projeto com o seguinte conteúdo:
 ```js
 const { app, BrowserWindow } = require('electron');
 const path = require('path');
@@ -24,19 +28,17 @@ function createWindow () {
   const win = new BrowserWindow({
     width: 1200,
     height: 800,
+    icon: path.join(__dirname, 'public', 'icons', 'icon-512.png'),
     webPreferences: {
       nodeIntegration: true,
       contextIsolation: false
     }
   });
-  win.loadURL('http://localhost:3000');
+  // Abra diretamente a URL da Vercel
+  win.loadURL('https://seu-projeto.vercel.app');
 }
 
-app.whenReady().then(() => {
-  // Inicia o servidor Node.js
-  require('./app');
-  createWindow();
-});
+app.whenReady().then(createWindow);
 
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {
@@ -44,7 +46,8 @@ app.on('window-all-closed', () => {
   }
 });
 ```
-> **Dica:** Certifique-se de que o seu `app.js` (servidor) está configurado para não travar se for iniciado mais de uma vez.
+
+> **Nota:** Não é mais necessário verificar porta, rodar servidor local ou incluir arquivos sensíveis no instalador.
 
 ### Passo 3: Ajustar o `package.json`
 Adicione ou ajuste os campos:
@@ -53,7 +56,7 @@ Adicione ou ajuste os campos:
 "main": "main.js",
 "scripts": {
   "start": "electron .",
-  "pack": "electron-packager . crud-clinica --platform=win32 --arch=x64 --out=dist --overwrite"
+  "pack": "electron-packager . crud-clinica --platform=win32 --arch=x64 --out=dist --overwrite --icon=public/icons/icon-512.ico"
 },
 // ...
 ```
@@ -65,15 +68,8 @@ npm run pack
 ```
 - Isso irá gerar uma pasta `dist/crud-clinica-win32-x64` com o executável do sistema.
 
-> **Atenção:**
-> - O arquivo `serviceAccountKey.json`, a pasta `views/`, a pasta `public/` e o arquivo `.env` devem estar juntos do executável, pois são lidos em tempo de execução.
-
 ### Passo 5: Testar o executável
-No PowerShell, execute:
-```powershell
-./dist/crud-clinica-win32-x64/crud-clinica.exe
-```
-A aplicação abrirá em uma janela desktop.
+Abra o executável gerado. Ele abrirá a versão web do sistema hospedada na Vercel.
 
 ---
 
@@ -88,10 +84,9 @@ O [Inno Setup](https://jrsoftware.org/isinfo.php) é uma ferramenta gratuita par
 ### Passo 2: Preparar os arquivos para o instalador
 Crie uma pasta, por exemplo `dist/instalador/`, e coloque dentro:
 - Pasta `crud-clinica-win32-x64` (gerada pelo Electron Packager)
-- Pasta `views/`
-- Pasta `public/`
-- `serviceAccountKey.json`
-- `.env`
+- Pasta `public/` (opcional, apenas para ícones)
+
+> **Não inclua** arquivos como `serviceAccountKey.json`, `.env`, `views/` ou o backend. Tudo está hospedado na Vercel.
 
 ### Passo 3: Criar o script do instalador
 Exemplo de script (`instalador.iss`):
@@ -103,6 +98,8 @@ DefaultDirName={pf}\CRUDClinica
 DefaultGroupName=CRUD Clínica
 OutputDir=.
 OutputBaseFilename=Instalador-CRUD-Clinica
+SetupIconFile=public\icons\icon-512.ico
+DefaultLanguage=pt_BR
 
 [Files]
 Source: "dist/instalador/*"; DestDir: "{app}"; Flags: recursesubdirs
@@ -119,16 +116,28 @@ Name: "{group}\CRUD Clínica"; Filename: "{app}\crud-clinica-win32-x64\crud-clin
 
 ---
 
-## 3. Observações Importantes
-- O executável depende dos arquivos de configuração e das views. Sempre distribua juntos.
-- O Firebase requer a chave e o `.env`.
-- Teste o instalador em outro computador antes de distribuir.
+## 3. Como Usar o Sistema Instalado
+
+- Basta abrir o executável instalado. Ele abrirá a versão web do sistema hospedada na Vercel.
+- Não é necessário rodar servidor local, nem configurar variáveis de ambiente ou arquivos sensíveis.
+- O sistema funcionará normalmente, inclusive como PWA, se instalado pelo navegador.
 
 ---
 
-## 4. Referências
+## 4. Solução de Problemas
+
+### O sistema não carrega ou aparece "Página não encontrada"
+- Verifique se a URL da Vercel está correta no arquivo `main.js`.
+- Certifique-se de que o deploy na Vercel está ativo e funcionando.
+
+### Ícone do Electron aparece no app ou no instalador
+- Certifique-se de que o parâmetro `icon` no `main.js` e a flag `--icon` no comando de empacotamento apontam para um arquivo `.ico` válido
+- No script do instalador, confira se `SetupIconFile` está correto
+
+---
+
+## 5. Referências
+- [Tutorial de Deploy na Vercel (prioritário)](./TUTORIAL-DEPLOY-VERCEL.md)
 - [Documentação do Electron](https://www.electronjs.org/docs/latest/)
 - [Electron Packager](https://github.com/electron/electron-packager)
 - [Inno Setup](https://jrsoftware.org/isinfo.php)
-
----

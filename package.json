@@ -2,22 +2,30 @@
   "name": "crud-pacientes-firebase",
   "version": "1.0.0",
   "description": "Sistema CRUD para pacientes usando Node.js, Firebase e EJS",
-  "main": "app.js",
+  "main": "main.js",
   "scripts": {
-    "start": "node app.js",
+    "start": "electron .",
+    "pack": "electron-packager . crud-clinica --platform=win32 --arch=x64 --out=dist --overwrite --icon=public/icons/icon-512.ico",
     "dev": "nodemon app.js"
   },
   "dependencies": {
-    "express": "^4.18.2",
-    "ejs": "^3.1.9",
     "body-parser": "^1.20.2",
-    "firebase-admin": "^11.11.0",
-    "dotenv": "^16.3.1"
+    "dotenv": "^16.3.1",
+    "ejs": "^3.1.9",
+    "express": "^4.18.2",
+    "firebase-admin": "^11.11.0"
   },
   "devDependencies": {
+    "electron": "^37.2.4",
+    "electron-packager": "^17.1.2",
     "nodemon": "^3.0.1"
   },
-  "keywords": ["nodejs", "firebase", "crud", "ejs"],
+  "keywords": [
+    "nodejs",
+    "firebase",
+    "crud",
+    "ejs"
+  ],
   "author": "",
   "license": "ISC"
-} 
+}

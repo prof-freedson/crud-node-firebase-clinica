@@ -2,3 +2,7 @@
 node_modules
 serviceAccountKey.json
 banco-clinica.sql
+Instalador-CRUD-Clinica.exe
+instalador.iss
+dist/
+main.js

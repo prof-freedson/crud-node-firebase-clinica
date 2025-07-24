@@ -203,3 +203,22 @@ Este projeto está sob a licença ISC.
 **Desenvolvido em**: 24/06/2025  
 **Tecnologias**: Node.js + Firebase + EJS  
 **Objetivo**: Sistema CRUD de pacientes para clínica 
+
+---
+
+## 🧭 Orientação: Flexibilizando o sistema para outras plataformas
+
+Para adaptar e ampliar o uso do sistema em diferentes plataformas (web, PWA, desktop), siga os tutoriais na ordem recomendada abaixo:
+
+1. **[TUTORIAL-PWA.md](./TUTORIAL-PWA.md)**  
+   Aprenda a transformar o sistema em um Progressive Web App (PWA), permitindo instalação no dispositivo, funcionamento offline e experiência de app nativo. Este é o primeiro passo para garantir flexibilidade e modernidade ao sistema.
+
+2. **[TUTORIAL-DEPLOY-VERCEL.md](./TUTORIAL-DEPLOY-VERCEL.md)**  
+   Veja como publicar o sistema na Vercel, tornando-o acessível via internet, com HTTPS e pronto para uso universal. Este é o método recomendado e prioritário para produção.
+
+3. **[TUTORIAL-EMPACOTAR.md](./TUTORIAL-EMPACOTAR.md)**  
+   Caso precise de uma versão desktop (executável para Windows), siga este tutorial. Lembre-se: o sistema foi otimizado para rodar na web, então utilize o empacotamento apenas em situações específicas.
+
+> **Recomendação:** Sempre priorize o uso via PWA e Vercel para maior compatibilidade, segurança e facilidade de manutenção. O empacotamento desktop é opcional e só deve ser feito se realmente necessário.
+
+--- 
